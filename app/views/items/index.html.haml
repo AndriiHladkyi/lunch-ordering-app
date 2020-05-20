@@ -1,0 +1,36 @@
+.row
+  .col-lg-12
+    %h3{align: "center"} Items
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Image
+      %th Title
+      %th Price
+      %th Category
+      %th Description
+      %th
+      %th
+      %th
+
+  %tbody
+    - date = 1.day.from_now(@items.first.date.to_date) rescue nil
+    - @items.each do |item|
+      - if date > item.date.to_date
+        - date = item.date.to_date
+        %tr.table-warning
+          %td{:colspan => "8"}= "#{date.strftime('%A')} - #{date}"
+      %tr
+        %td
+          - unless item.image.url.nil?
+            = image_tag item.image.url, height: '50'
+        %td= item.title
+        %td= number_to_currency item.price
+        %td= item.category&.name
+        %td= item.description
+        %td= link_to 'Show', item
+        %td= link_to 'Edit', edit_item_path(item)
+        %td= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }
+
+= button_to "New item", new_item_path, method: :get, class: "btn btn-primary"

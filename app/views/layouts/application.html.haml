@@ -1,0 +1,48 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title LunchOrderingApp
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body
+    .mx-auto{:style => "width: 800px;"}
+      %nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.rounded
+        %a.navbar-brand{:href => "/"} My best site ever
+        - if current_user
+          %ul.navbar-nav.mr-auto
+            - if current_user.admin?
+              %li.nav-item.active
+                %a= link_to 'Categories', categories_path, class: "nav-link"
+              %li.nav-item.active
+                %a= link_to 'Items', items_path, class: "nav-link"
+              %li.nav-item.active
+                %a= link_to 'Users', users_index_path, class: "nav-link"
+              %li.nav-item.active
+                %a= link_to 'Orders', root_path, class: "nav-link"
+              
+            - else
+              %li.nav-item.active
+                %a= link_to 'Dashboard', root_path, class: "nav-link"
+              %li.nav-item.active
+                %a= link_to 'Your orders', orders_path, class: "nav-link"
+          %ul.navbar-nav.ml-auto
+            %li.nav-item.active
+              %a= link_to 'Edit profile', edit_user_registration_path, class: "nav-link"
+            %li.nav-item.active
+              %a= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link"
+        - else
+          %ul.navbar-nav.ml-auto
+            %li.nav-item.active
+              %a= link_to 'Log in', new_session_path(resource_name), class: "nav-link"
+            %li.nav-item.active
+              %a= link_to 'Sign up', new_registration_path(resource_name), class: "nav-link"
+
+
+      = render 'layouts/alerts'
+      = yield
+
+

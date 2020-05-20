@@ -1,0 +1,31 @@
+%h3{align: "center"} Orders
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Your order
+      %th Title
+      %th Price
+      %th Category
+      %th Description
+      %th Order cost
+
+  %tbody
+    - @orders.each do |order|
+      %tr.table-warning
+        %td{:colspan => "5"}= "Order id: #{order.id}. #{order.user.name}, #{order.user.email}"
+        %td= number_to_currency order.total_price
+      - order.items.each do |item|
+        %tr
+          %td
+          %td= item.title
+          %td= number_to_currency item.price
+          %td= item.category&.name
+          %td= item.description
+          %td
+    %tr
+      %td.table-danger{:colspan => "8"}= "Dishes total cost of the day is #{number_to_currency @orders.map(&:total_price).sum}"
+
+%br
+= link_to 'Back', orders_path, class: "btn btn-primary"
+

@@ -1,0 +1,44 @@
+- if @items.empty?
+  %h3{align: "center"} There is no dishes
+  = link_to 'Back', root_path, class: "btn btn-primary"
+- else
+  .row
+    .col-lg-12
+      - today = @date.today?
+      - if today
+        %h3{align: "center"} Choose dishes
+      - else
+        %h3{align: "center"} This menu is no longer relevant
+
+  = form_for Order.new, url: orders_path, method: :post do |f|
+    %table.table
+      %thead.table-primary
+        %tr
+          %th Image
+          %th Title
+          %th Price
+          %th Category
+          %th Description
+          - if today
+            %th Choose
+
+      %tbody
+        - @categories.each do |category|
+          %tr
+            %td.table-warning{:colspan => "6"}= category.name
+          - @items.where(category_id: category.id).each do |item|
+            %tr
+              %td 
+                - unless item.image.url.nil?
+                  = image_tag item.image.url, height: '50'
+              %td= item.title
+              %td= number_to_currency item.price
+              %td= item.category&.name
+              %td= item.description
+              - if today
+                %td
+                  %input.form-check-input{:name => "category_#{category.id}", :value => item.id, :required => "", :type => "radio"}
+
+    - if today
+      = f.submit 'Create order', class: 'btn btn-primary'
+    = link_to 'Back', root_path, class: "btn btn-primary"

@@ -1,0 +1,17 @@
+%h3{align: "center"} Users
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Name
+      %th Email
+      %th Created at
+      %th Admin?
+
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.created_at
+        %td= user.admin

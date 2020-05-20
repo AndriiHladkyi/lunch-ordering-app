@@ -1,0 +1,37 @@
+%h3{align: "center"} Orders
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Image
+      %th Title
+      %th Price
+      %th Category
+      %th Description
+      %th Total price
+      %th
+      %th
+
+  %tbody
+    - @orders.order(date: :desc).each do |order|
+      %tr.table-warning
+        %td{:colspan => "5"}= "Order date is #{order.date}"
+        %td= number_to_currency order.total_price
+        %td= link_to 'Show', order
+        %td= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' }
+      - order.items.each do |item|
+        %tr
+          %td
+            - unless item.image.url.nil?
+              = image_tag item.image.url, height: '50'
+          %td= item.title
+          %td= number_to_currency item.price
+          %td= item.category&.name
+          %td= item.description
+          %td
+          %td
+          %td
+
+%br
+= link_to 'New Order', root_path, class: "btn btn-primary"
+  

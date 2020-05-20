@@ -1,0 +1,16 @@
+%h3{align: "center"} Choose date
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Date
+      %th Day of week
+      %th Choose
+
+  %tbody
+    - (@date-6..@date).reverse_each do |d|
+      %tr
+        - link = current_user.admin? ? orders_by_day_path(d) : dashboard_by_day_path(d)
+        %td= d
+        %td= d.strftime('%A')
+        %td= link_to 'Select', link, class: "btn btn-primary"

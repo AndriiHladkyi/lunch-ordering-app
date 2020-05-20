@@ -1,0 +1,30 @@
+%h3{align: "center"} Your order
+
+%table.table.table-hover
+  %thead.table-primary
+    %tr
+      %th Your order
+      %th Title
+      %th Price
+      %th Category
+      %th Description
+
+  %tbody
+    %tr
+      %td{:colspan => "5"}= "Order id is #{@order.id}"
+    - @order.items.each do |item|
+      %tr
+        %td
+        %td= item.title
+        %td= number_to_currency item.price
+        %td= item.category&.name
+        %td= item.description
+    %tr
+      %td{:colspan => "5"}= "Total cost is #{number_to_currency @order.total_price}"
+
+%br
+= link_to 'New order', root_path, class: "btn btn-primary"
+= link_to 'Back', orders_path, class: "btn btn-primary"
+%br
+%br
+= link_to 'Destroy order', @order, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
