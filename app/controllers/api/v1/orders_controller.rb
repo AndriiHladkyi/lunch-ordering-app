@@ -9,32 +9,20 @@ class Api::V1::OrdersController < Api::ApplicationController
   end
 
   def create
-    if check_items
-      order = Order.new
-      order.items = @items
-      order.user_id = current_api_user.id
-      order.total_price = @items.map(&:price).sum
-      order.date = Date.today
+    order = Order.new
+    order.items = @items
+    order.user_id = current_api_user.id
 
-      if order.save
-        render json: order, each_serializer: OrderSerializer, status: :ok
-      else
-        render json: item.errors, status: :unprocessable_entity
-      end 
+    if order.save
+      render json: order, each_serializer: OrderSerializer, status: :ok
     else
-      render json: { errors: "Only one item from one category!" }.to_json, status: :unprocessable_entity
-    end
+      render json: order.errors, status: :unprocessable_entity
+    end 
   end
 
   private
 
   def set_items
     @items ||= Item.where(id: params[:items_ids].split(','))
-  end
-
-  def check_items
-    categories_ids = Category.all.map(&:id)
-    items_ids = @items.map(&:category_id).map(&:to_i).sort
-    items_ids == categories_ids
   end
 end

@@ -3,6 +3,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   before_save :set_admin
+  
+  validates :name, presence: true
 
   def admin?
     admin

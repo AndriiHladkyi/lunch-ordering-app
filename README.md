@@ -37,7 +37,7 @@ curl https://lunch-ordering-hladkyi.herokuapp.com/api/v1/items -H 'Authorization
 
 **To create an order, enter:**
 ```bash
-curl https://lunch-ordering-hladkyi.herokuapp.com/api/v1/orders -H 'Authorization: Bearer your_token' -d 'items_ids=[1,2,3]'
+curl https://lunch-ordering-hladkyi.herokuapp.com/api/v1/orders -H 'Authorization: Bearer your_token' -d 'items_ids=1,2,3'
 ```
 
 WARNING! There must be one position from each category!# lunch-ordering-app

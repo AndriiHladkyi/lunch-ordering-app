@@ -19,8 +19,6 @@ class OrdersController < ApplicationController
     order = Order.new
     order.items = items
     order.user_id = current_user.id
-    order.total_price = items.map(&:price).sum
-    order.date = Date.today
 
     respond_to do |format|
       if order.save
