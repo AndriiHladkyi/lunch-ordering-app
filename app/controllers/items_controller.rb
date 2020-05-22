@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin, only: [:index, :create, :update, :destroy]
+  before_action :authorize_admin
 
   def index
     @items = Item.order(date: :desc)
