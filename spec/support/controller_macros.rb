@@ -17,20 +17,8 @@ module ControllerMacros
     end
   end
 
-  def create_categories
-    (0..2).each do
-      FactoryBot.create(:category)
-    end
-  end
-
-  def create_items
-    Category.all.map do |category|
-      FactoryBot.create(:item, category_id: category.id)
-    end
-    FactoryBot.create(:item, category_id: Category.first.id)
-
-    Item.all.each do |item|
-      instance_variable_set("@item#{item.id}", item)
-    end
+  def authenticated_header(user, password)
+    response = AuthenticateUser.call(user, password)
+    { "Authorization" => "Bearer #{response.result}" }
   end
 end
