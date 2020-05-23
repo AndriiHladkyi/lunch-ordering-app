@@ -19,6 +19,7 @@ gem 'carrierwave'
 gem 'jwt'
 gem 'simple_command'
 gem 'active_model_serializers'
+gem 'travis'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 
