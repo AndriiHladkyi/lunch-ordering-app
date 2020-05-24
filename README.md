@@ -41,4 +41,3 @@ curl https://lunch-ordering-hladkyi.herokuapp.com/api/v1/orders -H 'Authorizatio
 ```
 
 WARNING! There must be one position from each category!# lunch-ordering-app
-# lunch-ordering-app
