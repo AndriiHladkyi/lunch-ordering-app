@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   before_validation :set_total_price, :set_date
   
   validate :check_items
-  validates :items, length: { is: 3 }
+  validates :items, length: { is: :category_count }
 
   private
 
@@ -24,5 +24,9 @@ class Order < ApplicationRecord
 
   def set_date
     self.date = Date.today
+  end
+
+  def category_count
+    Category.all.count
   end
 end
